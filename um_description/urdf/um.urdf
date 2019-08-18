@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="um">
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://um_description/meshes/base.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="gray">
+                <color rgba="0.75 0.75 0.75 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="joint1" type="prismatic">
+        <parent link="base_link"/>
+        <child link="link1"/>
+        <origin xyz="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit effort="100" lower="0" upper="0.59" velocity="1.0"/>
+    </joint>
+
+    <link name="link1">
+        <visual>
+            <origin xyz="0.055 0 0.005" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://um_description/meshes/joint1a.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="yellow">
+                <color rgba="1 0.4 0 1"/>
+            </material>
+        </visual>
+    </link>
+</robot>
