@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<robot name="um" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--Define the colors used in the um-->
+    <material name="Gray">
+        <color rgba="0.75 0.75 0.75 1" />
+    </material>
+
+    <material name="Yellow">
+        <color rgba="1 0.4 0 1"/>
+    </material>
+
+    <material name="Black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="White">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="Blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+
+    <material name="Red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+    <material name="Green">
+        <color rgba="0 1 0 1"/>
+    </material>
+
+<!-- Define the constants used in the um -->
+    <xacro:property name="M_PI" value="3.1415926" />
+    <xacro:property name="DAMPING" value="50" />
+    <xacro:property name="FRICTION" value="1" />
+
+<!-- Joint1 properties -->
+    <xacro:property name="JOINT1_EFFORT" value="100" />
+    <xacro:property name="JOINT1_LOWER" value="0" />
+    <xacro:property name="JOINT1_UPPER" value="0.59" />
+    <xacro:property name="JOINT1_VEL" value="1.0" />
+
+<!-- Joint2 properties -->
+    <xacro:property name="JOINT2_COOR" value="0.055 -0.0075 0.1764" />
+    <xacro:property name="JOINT2_EFFORT" value="300" />
+    <xacro:property name="JOINT2_LOWER" value="-${M_PI}" />
+    <xacro:property name="JOINT2_UPPER" value="${M_PI}" />
+    <xacro:property name="JOINT2_VEL" value="1.0" />
+
+<!-- Joint 3 properties -->
+    <xacro:property name="JOINT3_COOR" value="0.0349 0 0.0225" />
+    <xacro:property name="JOINT3_EFFORT" value="300" />
+    <xacro:property name="JOINT3_LOWER" value="-${M_PI}" />
+    <xacro:property name="JOINT3_UPPER" value="${M_PI}" />
+    <xacro:property name="JOINT3_VEL" value="1.0" />
+
+
+
+
+<!--////////////////  BASE LINK  ///////////////////// -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://um_description/meshes/base.STL" scale="1 1 1" />
+            </geometry>
+            <material name="Gray" />
+        </visual>
+    </link>
+
+    <joint name="joint1" type="prismatic">
+        <parent link="base_link"/>
+        <child link="link1"/>
+        <origin xyz="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit effort="${JOINT1_EFFORT}" lower="${JOINT1_LOWER}" upper="${JOINT1_UPPER}" velocity="${JOINT1_VEL}" />
+        <dynamics damping="${DAMPING}" friction="${FRICTION}" />
+    </joint>
+
+<!--/////////////////  LINK 1  //////////////////////// -->
+    <link name="link1">
+        <visual>
+            <origin xyz="${JOINT2_COOR}" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://um_description/meshes/link1.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="Yellow" />
+        </visual>
+    </link>
+
+    <joint name="joint2" type="revolute">
+        <parent link="link1" />
+        <child link="link2" />
+        <origin xyz="${JOINT2_COOR}" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="${JOINT2_EFFORT}" lower="${JOINT2_LOWER}" upper="${JOINT2_UPPER}" velocity="${JOINT2_VEL}" />
+        <dynamics damping="${DAMPING}" friction="${FRICTION}" />
+    </joint>
+
+<!--/////////////////  LINK 2  //////////////////////// -->
+    <link name="link2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://um_description/meshes/link2.STL" scale="1 1 1" />
+            </geometry>
+            <material name="Blue" />
+        </visual>
+    </link>
+
+    <joint name="joint3" type="revolute">
+        <parent link="link2" />
+        <child link="link3" />
+        <origin xyz="${JOINT3_COOR}" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="${JOINT3_EFFORT}" lower="${JOINT3_LOWER}" upper="${JOINT3_UPPER}" velocity="${JOINT3_VEL}" />
+        <dynamics damping="${DAMPING}" friction="${FRICTION}" />
+    </joint>
+
+<!--/////////////////  LINK 3  //////////////////////// -->
+    <link name="link3">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://um_description/meshes/link3.STL" scale="1 1 1" />
+            </geometry>
+            <material name="Green" />
+        </visual>
+    </link>
+
+<!--/////////////////  LINK 4  //////////////////////// -->
+
+<!--/////////////////  LINK 5  //////////////////////// -->
+</robot>

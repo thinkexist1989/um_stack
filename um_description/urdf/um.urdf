@@ -24,7 +24,7 @@
         <visual>
             <origin xyz="0.055 0 0.005" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://um_description/meshes/joint1a.STL" scale="1 1 1"/>
+                <mesh filename="package://um_description/meshes/link1a.STL" scale="1 1 1"/>
             </geometry>
             <material name="yellow">
                 <color rgba="1 0.4 0 1"/>

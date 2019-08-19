@@ -1,0 +1,12 @@
+<launch>
+    <arg name="model" default="$(find xacro)/xacro --inorder '$(find um_description)/urdf/um.urdf.xacro' " />
+    <param name="robot_description" command="$(arg model)" />
+
+    <param name="use_gui" value="true"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find um_description)/config/um_urdf.rviz" required="true"/>
+</launch>
