@@ -1,0 +1,9 @@
+<launch>
+    <!-- Load parameters of position_controllers/JointTrajectoryController -->
+    <rosparam file="$(find um_gazebo)/config/um_trajectory_control.yaml" command="load" />
+    
+    <!-- Create a node to load um_controller or other controllers -->
+    <node name="um_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+            ns="/um" args="um_joint_controller" />
+
+</launch>

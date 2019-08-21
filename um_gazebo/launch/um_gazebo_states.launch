@@ -1,0 +1,11 @@
+<launch>
+    <!-- load parameters of joint_state_controller/JointStateController -->
+    <rosparam file="$(find um_gazebo)/config/um_gazebo_joint_states.yaml" command="load" />
+    <!-- Create node to load joint_state_controller -->
+    <node name="state_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+            ns="/um" args="joint_state_controller" />
+    <!-- Create node to publish TF -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" >
+        <remap from="joint_states" to="/um/joint_states" />
+    </node>
+</launch>

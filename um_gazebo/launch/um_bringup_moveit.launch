@@ -1,0 +1,9 @@
+<launch>
+    <include file="$(find um_gazebo)/launch/um_gazebo_empty_world.launch" />
+
+    <include file="$(find um_gazebo)/launch/um_gazebo_states.launch" />
+
+    <include file="$(find um_gazebo)/launch/um_trajectory_controller.launch" />
+
+    <include file="$(find um_moveit_config)/launch/moveit_planning_execution.launch" />
+</launch>
