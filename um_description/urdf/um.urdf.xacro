@@ -34,7 +34,9 @@
     <xacro:macro name="inertia_matrix" params="mass">
         <inertial>
             <mass value="${mass}" />
-            <inertia ixx="1.0" ixy="0" ixz="0" iyy="0.5" iyz="0" izz="1.0" />
+            <inertia ixx="0.001" ixy="0"    ixz="0" 
+                                     iyy="0.001" iyz="0" 
+                                                 izz="0.001" />
         </inertial>
     </xacro:macro>
 
@@ -44,6 +46,7 @@
     <xacro:property name="FRICTION" value="1" />
 
     <!-- Joint1 properties -->
+    <xacro:property name="JOINT1_COOR" value="0 0 0.5" />
     <xacro:property name="JOINT1_EFFORT" value="300" />
     <xacro:property name="JOINT1_LOWER" value="0" />
     <xacro:property name="JOINT1_UPPER" value="0.59" />
@@ -77,17 +80,25 @@
     <xacro:property name="JOINT5_UPPER" value="${M_PI/2}" />
     <xacro:property name="JOINT5_VEL" value="1.0" />
 
+ <!-- ///////////// WORLD LINK FOR GAZEBO ///////////// -->
+    <link name="world"/>
+
+    <joint name="fixed" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+
 <!-- ////////////////  BASE LINK  ///////////////////// -->
     <link name="base_link">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="${JOINT1_COOR}" rpy="${M_PI} 0 0" />
             <geometry>
                 <mesh filename="package://um_description/meshes/base.STL" scale="1 1 1" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="${JOINT1_COOR}" rpy="${M_PI} 0 0" />
             <geometry>
                 <mesh filename="package://um_description/meshes/base.STL" scale="1 1 1" />
             </geometry>        
@@ -98,7 +109,7 @@
     <joint name="joint1" type="prismatic">
         <parent link="base_link"/>
         <child link="link1"/>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="${JOINT1_COOR}" rpy="${M_PI} 0 0" />
         <axis xyz="1 0 0"/>
         <limit effort="${JOINT1_EFFORT}" lower="${JOINT1_LOWER}" upper="${JOINT1_UPPER}" velocity="${JOINT1_VEL}" />
         <dynamics damping="${DAMPING}" friction="${FRICTION}" />
@@ -281,6 +292,8 @@
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/um</robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <legacyModeNS>true</legacyModeNS>
         </plugin>
     </gazebo>
 

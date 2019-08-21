@@ -1,0 +1,8 @@
+<launch>
+    <!-- Start Gazebo simulation -->
+    <include file="$(find um_gazebo)/launch/um_gazebo_empty_world.launch" />
+
+    <!-- Start ROS controllers -->
+    <include file="$(find um_gazebo)/launch/um_gazebo_controller.launch" />
+    
+</launch>

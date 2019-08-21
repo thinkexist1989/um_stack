@@ -1,7 +1,9 @@
 <launch>
 
+<!-- Load controller parameters from .yaml file -->
 <rosparam file="$(find um_gazebo)/config/um_gazebo_control.yaml" command="load" />
 
+<!-- Spawn controllers -->
 <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
         ns="/um" args="joint_state_controller
                           joint1_position_controller
@@ -9,17 +11,6 @@
                           joint3_position_controller
                           joint4_position_controller
                           joint5_position_controller" />
-
-<!-- Start Gazebo simulation environment -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="use_sim_time" value="true" />
-        <arg name="gui" value="true" />
-        <arg name="debug" value="false" />
-        <arg name="paused" value="false" />
-    </include>
-
-<!-- Load the model of um -->
-    <param name="robot_description" command=" $(find xacro)/xacro --inorder '$(find um_description)/urdf/um.urdf.xacro' " />
 
 <!-- Start publish joint states -->
     <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /-->
@@ -29,11 +20,4 @@
         <remap from="/joint_states" to="/um/joint_states" />
     </node>
 
-<!-- Start Rviz -->
-    <!--param name="use_gui" value="true"/-->
-    <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find um_description)/config/um_urdf.rviz" required="true"/-->
-
-<!-- Load the model of um in Gazebo -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
-            args="-urdf -model um -param robot_description" />
 </launch>

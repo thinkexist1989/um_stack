@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: um_description
+    relative_path: urdf/um.urdf.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/um.srdf
+  CONFIG:
+    author_name: Yang Luo
+    author_email: yluo@hit.edu.cn
+    generated_timestamp: 1566366696
